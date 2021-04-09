@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./infra/init:/docker-entrypoint-initdb.d/
+
+  server:
+    container_name: server
+    image: nestjs-api-dev:1.0.0
+    build:
+      context: ./packages/server
+      dockerfile: Dockerfile
+    command: yarn start:prod
+    ports:
+      - 5000:5000
+    networks:
+      - nesjs-network
+    volumes:
+      - ./packages/server:/usr/src/app/server
+      - /usr/src/app/server/node_modules
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  front:
+    container_name: front
+    build:
+      context: ./packages/front
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app/front
+      - /usr/src/app/front/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+
+networks:
+  nesjs-network:

@@ -1,0 +1,2 @@
+*.d.ts
+packages/front/src/reportWebVitals.ts
