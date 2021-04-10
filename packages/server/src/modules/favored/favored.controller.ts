@@ -12,11 +12,6 @@ export class FavoredControler {
 
   @Post()
   public create(@Body() payload: FavoredDTO): Promise<Favored> {
-    return this.favoredRepository.save({
-      ...payload,
-      bank: {
-        code: payload.bankCode,
-      },
-    });
+    return this.favoredRepository.save(payload);
   }
 }

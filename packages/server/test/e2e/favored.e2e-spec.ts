@@ -1,8 +1,10 @@
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { BankAccountType } from '../../src/modules/bank/bank-account-type.enum';
+import { getRepository } from 'typeorm';
+import { Bank } from '../../src/modules/bank/banck.entity';
 import { FavoredModule } from '../../src/modules/favored/favored.module';
+import { FavoredBuilder } from '../../src/modules/favored/specs/favored.builder';
 import { seed } from '../../src/seed';
 import { TypeOrmModuleTest } from '../helpers/database';
 
@@ -29,30 +31,16 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (POST)', async () => {
+    const bank = await getRepository(Bank).findOneOrFail();
+
+    const payload = FavoredBuilder.build({ bank });
+
     const { body } = await request(app.getHttpServer())
       .post('/favored')
-      .send({
-        name: 'Pedro',
-        cpf_cnpj: '000.000.000-00',
-        email: 'pedro@email.com',
-        agency: 3444,
-        bankCode: '237',
-        bankAccountType: BankAccountType.current,
-        bankAccount: 23433,
-        bankAccountDigit: 2,
-      })
+      .send(payload)
       .expect(201);
 
-    expect(body).toMatchObject({
-      name: 'Pedro',
-      cpf_cnpj: '000.000.000-00',
-      email: 'pedro@email.com',
-      agency: 3444,
-      bank: { code: '237' },
-      bankAccountType: BankAccountType.current,
-      bankAccount: 23433,
-      bankAccountDigit: 2,
-    });
+    expect(body).toMatchObject(payload);
   });
 
   afterAll(async () => {

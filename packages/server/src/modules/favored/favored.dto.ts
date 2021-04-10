@@ -5,8 +5,14 @@ import {
   IsString,
   Matches,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
 import { BankAccountType } from '../bank/bank-account-type.enum';
+
+class BankDTO {
+  @IsString()
+  public code: string;
+}
 
 export class FavoredDTO {
   @IsString()
@@ -18,8 +24,8 @@ export class FavoredDTO {
   @IsString()
   public email: string;
 
-  @IsString()
-  public bankCode: string;
+  @ValidateNested()
+  public bank: BankDTO;
 
   @IsString()
   @MaxLength(4)
