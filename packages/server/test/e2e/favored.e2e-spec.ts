@@ -1,5 +1,5 @@
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { getRepository } from 'typeorm';
 import { Bank } from '../../src/modules/bank/banck.entity';
@@ -14,7 +14,7 @@ describe('FavoredController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+    const moduleFixture = await Test.createTestingModule({
       imports: [TypeOrmModuleTest, FavoredModule],
     }).compile();
 
