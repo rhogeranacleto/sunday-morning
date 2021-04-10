@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FavoredDTO } from './favored.dto';
@@ -13,5 +13,12 @@ export class FavoredControler {
   @Post()
   public create(@Body() payload: FavoredDTO): Promise<Favored> {
     return this.favoredRepository.save(payload);
+  }
+
+  @Delete()
+  public async remove(@Query('ids') ids: string[]): Promise<void> {
+    const favoreds = await this.favoredRepository.findByIds(ids);
+
+    await this.favoredRepository.remove(favoreds);
   }
 }
