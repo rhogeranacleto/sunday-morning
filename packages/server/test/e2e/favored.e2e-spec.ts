@@ -89,6 +89,20 @@ describe('FavoredController (e2e)', () => {
     );
   });
 
+  it('GET /favored/:id', async () => {
+    const bank = await getRepository(Bank).findOneOrFail();
+
+    const favored = await getRepository(Favored).save(
+      FavoredBuilder.build({ bank }),
+    );
+
+    const { body } = await request(app.getHttpServer())
+      .get(`/favored/${favored.id}`)
+      .expect(200);
+
+    expect(body).toMatchObject(favored);
+  });
+
   it('POST /favored', async () => {
     const bank = await getRepository(Bank).findOneOrFail();
 
