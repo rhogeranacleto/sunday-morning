@@ -3,12 +3,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { getRepository } from 'typeorm';
 import { Bank } from '../../src/modules/bank/banck.entity';
+import { Favored } from '../../src/modules/favored/favored.entity';
 import { FavoredModule } from '../../src/modules/favored/favored.module';
 import { FavoredBuilder } from '../../src/modules/favored/specs/favored.builder';
 import { seed } from '../../src/seed';
 import { TypeOrmModuleTest } from '../helpers/database';
 
-describe('AppController (e2e)', () => {
+describe('FavoredController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -30,7 +31,7 @@ describe('AppController (e2e)', () => {
     await seed();
   });
 
-  it('/ (POST)', async () => {
+  it('POST /favored', async () => {
     const bank = await getRepository(Bank).findOneOrFail();
 
     const payload = FavoredBuilder.build({ bank });
@@ -41,6 +42,24 @@ describe('AppController (e2e)', () => {
       .expect(201);
 
     expect(body).toMatchObject(payload);
+  });
+
+  it('DELETE /favored', async () => {
+    const bank = await getRepository(Bank).findOneOrFail();
+
+    const favoreds = await getRepository(Favored).save(
+      FavoredBuilder.buildList(3, { bank }),
+    );
+    const ids = favoreds.map((favored) => favored.id);
+
+    await request(app.getHttpServer())
+      .delete('/favored')
+      .query({ ids })
+      .expect(200);
+
+    await expect(getRepository(Favored).findByIds(ids)).resolves.toHaveLength(
+      0,
+    );
   });
 
   afterAll(async () => {
