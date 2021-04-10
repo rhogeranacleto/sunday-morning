@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { FavoredDTO, FavoredQueryDTO } from './favored.dto';
 import { Favored } from './favored.entity';
 
@@ -28,9 +28,9 @@ export class FavoredControler {
       take,
       skip,
       where: search && [
-        { name: search },
-        { cpf_cnpj: search },
-        { agency: search },
+        { name: ILike(`%${search}%`) },
+        { cpf_cnpj: ILike(`%${search}%`) },
+        { agency: ILike(`%${search}%`) },
       ],
     });
   }
