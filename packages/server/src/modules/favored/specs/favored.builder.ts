@@ -1,15 +1,21 @@
-import { makeFactoryWithRequired } from 'factory.ts/lib/sync';
+import { each, makeFactoryWithRequired } from 'factory.ts/lib/sync';
+import * as faker from 'faker';
 import { BankAccountType } from '../../bank/bank-account-type.enum';
 import { Favored } from '../favored.entity';
 
+const CPF_REGEX = '[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]';
+
 export const FavoredBuilder = makeFactoryWithRequired<Partial<Favored>, 'bank'>(
   {
-    name: 'Pedro',
-    cpf_cnpj: '000.000.000-00',
-    email: 'pedro@email.com',
-    agency: '3444',
-    bankAccountType: BankAccountType.current,
-    bankAccount: '23433',
-    bankAccountDigit: '2',
+    name: each(() => faker.name.findName()),
+    cpf_cnpj: each(() => faker.helpers.regexpStyleStringParse(CPF_REGEX)),
+    email: each(() => faker.internet.email()),
+    agency: each(() => faker.finance.account(4)),
+    agencyDigit: each(() => faker.datatype.number(9).toString()),
+    bankAccountType: each(() =>
+      faker.random.arrayElement(Object.values(BankAccountType)),
+    ),
+    bankAccount: each(() => faker.finance.account(5)),
+    bankAccountDigit: each(() => faker.datatype.number(9).toString()),
   },
 );
