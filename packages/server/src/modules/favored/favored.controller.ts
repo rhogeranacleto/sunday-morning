@@ -54,7 +54,7 @@ export class FavoredControler {
   }
 
   @Delete()
-  public async remove(@Query('ids') ids: string[]): Promise<void> {
+  public async remove(@Body('ids') ids: string[]): Promise<void> {
     const favoreds = await this.favoredRepository.findByIds(ids);
 
     await this.favoredRepository.remove(favoreds);

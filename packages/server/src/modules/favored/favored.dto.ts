@@ -1,7 +1,7 @@
 import {
   IsBoolean,
   IsEnum,
-  IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
   Matches,
@@ -53,10 +53,12 @@ export class FavoredDTO {
 }
 
 export class FavoredQueryDTO {
-  @IsNumber()
+  @IsNumberString()
+  @IsOptional()
   public skip = 0;
 
-  @IsNumber()
+  @IsOptional()
+  @IsNumberString()
   public take = 10;
 
   @IsString()

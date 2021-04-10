@@ -145,7 +145,7 @@ describe('FavoredController (e2e)', () => {
 
     await request(app.getHttpServer())
       .delete('/favored')
-      .query({ ids })
+      .send({ ids })
       .expect(200);
 
     await expect(getRepository(Favored).findByIds(ids)).resolves.toHaveLength(
