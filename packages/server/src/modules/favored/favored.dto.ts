@@ -1,6 +1,7 @@
 import {
   IsBoolean,
   IsEnum,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -49,4 +50,16 @@ export class FavoredDTO {
   @IsBoolean()
   @IsOptional()
   public draft: boolean;
+}
+
+export class FavoredQueryDTO {
+  @IsNumber()
+  public skip = 0;
+
+  @IsNumber()
+  public take = 10;
+
+  @IsString()
+  @IsOptional()
+  public search?: string;
 }
