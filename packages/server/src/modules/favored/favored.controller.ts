@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FavoredDTO, FavoredQueryDTO } from './favored.dto';
@@ -23,6 +32,11 @@ export class FavoredControler {
         { agency: search },
       ],
     });
+  }
+
+  @Get(':id')
+  public getOne(@Param('id', ParseUUIDPipe) id: string): Promise<Favored> {
+    return this.favoredRepository.findOneOrFail(id);
   }
 
   @Post()

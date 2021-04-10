@@ -22,7 +22,7 @@ export class Favored extends BaseEntity {
   @Column()
   public email: string;
 
-  @ManyToOne(() => Bank, { nullable: false })
+  @ManyToOne(() => Bank, { nullable: false, eager: true })
   public bank: Bank;
 
   @Column()
