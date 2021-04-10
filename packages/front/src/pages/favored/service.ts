@@ -1,7 +1,11 @@
 import { ENVIRONMENT } from '../../env';
 
-export const getAll = async (skip: number) => {
-  const params = new URLSearchParams({ skip: skip.toString(), take: '10' });
+export const getAll = async (skip: number, search: string) => {
+  const params = new URLSearchParams({
+    skip: skip.toString(),
+    take: '10',
+    search,
+  });
 
   const res = await fetch(`${ENVIRONMENT.url}/favored?${params}`);
 

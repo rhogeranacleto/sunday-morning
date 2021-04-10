@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
 import { useCallback, useEffect, useState } from 'react';
 import { COLUMNS } from './list-columns';
@@ -11,25 +11,35 @@ const useFavoreds = () => {
   const [totalRow, setTotalRow] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
 
   const fetchFavoreds = useCallback(async () => {
     const skip = page * PAGE_SIZE;
 
     setLoading(true);
 
-    const [rows, total] = await favoredService.getAll(skip);
+    const [rows, total] = await favoredService.getAll(skip, search);
 
     setFavoreds(rows);
     setTotalRow(total);
 
     setLoading(false);
-  }, [page]);
+  }, [page, search]);
 
   useEffect(() => {
     fetchFavoreds();
   }, [fetchFavoreds]);
 
-  return { favoreds, totalRow, setPage, loading, page, fetchFavoreds };
+  return {
+    favoreds,
+    totalRow,
+    setPage,
+    loading,
+    page,
+    fetchFavoreds,
+    search,
+    setSearch,
+  };
 };
 
 export const FavoredListPage = () => {
@@ -40,6 +50,8 @@ export const FavoredListPage = () => {
     page,
     setPage,
     fetchFavoreds,
+    search,
+    setSearch,
   } = useFavoreds();
   const [selection, setSelection] = useState<GridRowId[]>([]);
 
@@ -50,6 +62,15 @@ export const FavoredListPage = () => {
 
   return (
     <div style={{ height: '100%' }}>
+      <header>
+        <TextField
+          id="outlined-basic"
+          label="Nome, CPF, agência ou conta"
+          variant="outlined"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </header>
       <Button
         variant="contained"
         color="secondary"
