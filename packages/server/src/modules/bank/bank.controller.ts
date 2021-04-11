@@ -15,7 +15,7 @@ export class BankController {
     return this.bankRepository.find();
   }
 
-  @Get('account-type')
+  @Get('account-types')
   public getAccountType(): string[] {
     return Object.values(BankAccountType);
   }
