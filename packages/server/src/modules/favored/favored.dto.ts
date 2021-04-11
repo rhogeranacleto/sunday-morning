@@ -18,6 +18,10 @@ class BankDTO {
 
 export class FavoredDTO {
   @IsString()
+  @IsOptional()
+  public id: string;
+
+  @IsString()
   @IsNotEmpty()
   public name: string;
 

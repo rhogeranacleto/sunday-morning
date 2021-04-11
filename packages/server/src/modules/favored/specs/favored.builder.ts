@@ -17,5 +17,6 @@ export const FavoredBuilder = makeFactoryWithRequired<Partial<Favored>, 'bank'>(
     ),
     bankAccount: each(() => faker.finance.account(5)),
     bankAccountDigit: each(() => faker.datatype.number(9).toString()),
+    draft: each(() => faker.datatype.boolean()),
   },
 );
