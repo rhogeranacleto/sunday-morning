@@ -1,6 +1,7 @@
 import { Button, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useEffect, useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as bankService from '../bank/service';
 import * as favoredService from './service';
 
@@ -34,16 +35,24 @@ const errorsReducer = (
   return state;
 };
 
-export const NewFavored = () => {
-  const [name, setName] = useState('');
-  const [cpf_cnpj, setCpfCnpj] = useState('');
-  const [email, setEmail] = useState('');
-  const [bank, setBank] = useState<IBank>();
-  const [agency, setAgency] = useState('');
-  const [agencyDigit, setAgencyDigit] = useState('');
-  const [bankAccountType, setBankAccountType] = useState('');
-  const [bankAccount, setBankAccount] = useState('');
-  const [bankAccountDigit, setBankAccountDigit] = useState('');
+interface IFavoredFormProps {
+  favored?: any;
+}
+
+export const FavoredForm = ({ favored }: IFavoredFormProps) => {
+  const [name, setName] = useState(favored?.name ?? '');
+  const [cpf_cnpj, setCpfCnpj] = useState(favored?.cpf_cnpj ?? '');
+  const [email, setEmail] = useState(favored?.email ?? '');
+  const [bank, setBank] = useState<IBank>(favored?.bank);
+  const [agency, setAgency] = useState(favored?.agency ?? '');
+  const [agencyDigit, setAgencyDigit] = useState(favored?.agencyDigit ?? '');
+  const [bankAccountType, setBankAccountType] = useState(
+    favored?.bankAccountType ?? '',
+  );
+  const [bankAccount, setBankAccount] = useState(favored?.bankAccount ?? '');
+  const [bankAccountDigit, setBankAccountDigit] = useState(
+    favored?.bankAccountDigit ?? '',
+  );
   const [banks, setBanks] = useState<IBank[]>([]);
   const [accountTypes, setAccountTypes] = useState<string[]>([]);
   const [errors, dispatchError] = useReducer(errorsReducer, {});
@@ -54,15 +63,18 @@ export const NewFavored = () => {
         setBanks(banksList);
         setAccountTypes(accountTypesList);
 
-        setBank(banksList[0]);
-        setBankAccountType(accountTypesList[0]);
+        if (!favored) {
+          setBank(banksList[0]);
+          setBankAccountType(accountTypesList[0]);
+        }
       },
     );
   }, []);
 
   const create = async () => {
     try {
-      await favoredService.create({
+      await favoredService.upsert({
+        id: favored?.id,
         name,
         cpf_cnpj,
         email,
@@ -146,7 +158,7 @@ export const NewFavored = () => {
       <Autocomplete
         id="favored-account-type"
         options={accountTypes}
-        getOptionLabel={(option) =>
+        getOptionLabel={(option: string) =>
           option
             .toLowerCase()
             .replace('_', ' ')
@@ -181,7 +193,9 @@ export const NewFavored = () => {
         error={Boolean(errors.bankAccountDigit)}
         helperText={errors.bankAccountDigit}
       />
-      <Button>Cancelar</Button>
+      <Link to="/" component={Button}>
+        Cancelar
+      </Link>
       <Button onClick={create}>Salvar</Button>
     </div>
   );

@@ -20,7 +20,7 @@ export const deleteMany = async (ids: string[]) => {
   });
 };
 
-export const create = async (payload: Record<string, unknown>) => {
+export const upsert = async (payload: Record<string, unknown>) => {
   const res = await fetch(`${ENVIRONMENT.url}/favored`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
