@@ -103,17 +103,33 @@ describe('FavoredController (e2e)', () => {
     expect(body).toMatchObject(favored);
   });
 
-  it('POST /favored', async () => {
-    const bank = await getRepository(Bank).findOneOrFail();
+  describe('POST /favored', () => {
+    it('should create one new', async () => {
+      const bank = await getRepository(Bank).findOneOrFail();
 
-    const payload = FavoredBuilder.build({ bank });
+      const payload = FavoredBuilder.build({ bank });
 
-    const { body } = await request(app.getHttpServer())
-      .post('/favored')
-      .send(payload)
-      .expect(201);
+      const { body } = await request(app.getHttpServer())
+        .post('/favored')
+        .send(payload)
+        .expect(201);
 
-    expect(body).toMatchObject(payload);
+      expect(body).toMatchObject(payload);
+    });
+
+    it('should update existent', async () => {
+      const payload = await getRepository(Favored).findOneOrFail();
+
+      payload.agency = '0778';
+      payload.draft = false;
+
+      const { body } = await request(app.getHttpServer())
+        .post('/favored')
+        .send(payload)
+        .expect(201);
+
+      expect(body).toMatchObject(payload);
+    });
   });
 
   it('PUT /favored/:id', async () => {
