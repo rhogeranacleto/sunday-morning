@@ -4,13 +4,14 @@ import { AddCircle } from '@material-ui/icons';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EditFavoredModal } from './edit-modal';
+import { IFavored } from './interfaces';
 import { COLUMNS } from './list-columns';
 import * as favoredService from './service';
 
 const PAGE_SIZE = 10;
 
 const useFavoreds = () => {
-  const [favoreds, setFavoreds] = useState([]);
+  const [favoreds, setFavoreds] = useState<IFavored[]>([]);
   const [totalRow, setTotalRow] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -57,12 +58,14 @@ export const FavoredListPage = () => {
     setSearch,
   } = useFavoreds();
   const [selection, setSelection] = useState<GridRowId[]>([]);
-  const [editFavored, setEditFavored] = useState();
+  const [editFavored, setEditFavored] = useState<IFavored | undefined>();
 
   const deleteMany = async () => {
     await favoredService.deleteMany(selection as string[]);
     await fetchFavoreds();
   };
+
+  const closeModal = useCallback(() => setEditFavored(undefined), []);
 
   return (
     <div style={{ height: '100%' }}>
@@ -105,13 +108,13 @@ export const FavoredListPage = () => {
           }
           selectionModel={selection}
           autoHeight
-          onCellClick={(e) => setEditFavored(e.row as any)}
+          onCellClick={(e) => setEditFavored(e.row as IFavored)}
         />
-        <Modal
-          open={Boolean(editFavored)}
-          onClose={() => setEditFavored(undefined)}
-        >
-          <EditFavoredModal favored={editFavored} />
+        <Modal open={Boolean(editFavored)} onClose={closeModal}>
+          <EditFavoredModal
+            favored={editFavored as IFavored}
+            closeModal={closeModal}
+          />
         </Modal>
       </div>
     </div>

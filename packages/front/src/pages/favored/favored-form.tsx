@@ -3,12 +3,8 @@ import { Autocomplete } from '@material-ui/lab';
 import { useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as bankService from '../bank/service';
+import { IBank, IFavored } from './interfaces';
 import * as favoredService from './service';
-
-interface IBank {
-  code: string;
-  name: string;
-}
 
 const errorsReducer = (
   state: { [key: string]: string | boolean },
@@ -36,14 +32,15 @@ const errorsReducer = (
 };
 
 interface IFavoredFormProps {
-  favored?: any;
+  favored?: IFavored;
+  closeModal?: () => void;
 }
 
-export const FavoredForm = ({ favored }: IFavoredFormProps) => {
+export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
   const [name, setName] = useState(favored?.name ?? '');
   const [cpf_cnpj, setCpfCnpj] = useState(favored?.cpf_cnpj ?? '');
   const [email, setEmail] = useState(favored?.email ?? '');
-  const [bank, setBank] = useState<IBank>(favored?.bank);
+  const [bank, setBank] = useState<IBank | undefined>(favored?.bank);
   const [agency, setAgency] = useState(favored?.agency ?? '');
   const [agencyDigit, setAgencyDigit] = useState(favored?.agencyDigit ?? '');
   const [bankAccountType, setBankAccountType] = useState(
@@ -71,7 +68,7 @@ export const FavoredForm = ({ favored }: IFavoredFormProps) => {
     );
   }, []);
 
-  const create = async () => {
+  const upsert = async () => {
     try {
       await favoredService.upsert({
         id: favored?.id,
@@ -193,10 +190,14 @@ export const FavoredForm = ({ favored }: IFavoredFormProps) => {
         error={Boolean(errors.bankAccountDigit)}
         helperText={errors.bankAccountDigit}
       />
-      <Link to="/" component={Button}>
-        Cancelar
-      </Link>
-      <Button onClick={create}>Salvar</Button>
+      {closeModal ? (
+        <Button onClick={closeModal}>Cancelar</Button>
+      ) : (
+        <Link to="/" component={Button}>
+          Cancelar
+        </Link>
+      )}
+      <Button onClick={upsert}>Salvar</Button>
     </div>
   );
 };
