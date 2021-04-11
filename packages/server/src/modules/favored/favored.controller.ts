@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { FavoredDTO, FavoredQueryDTO } from './favored.dto';
 import { Favored } from './favored.entity';
+import { BankAccountValidationPipe } from './favored.pipe';
 
 @Controller('favored')
 export class FavoredControler {
@@ -41,7 +42,9 @@ export class FavoredControler {
   }
 
   @Post()
-  public upsert(@Body() payload: FavoredDTO): Promise<Favored> {
+  public upsert(
+    @Body(BankAccountValidationPipe) payload: FavoredDTO,
+  ): Promise<Favored> {
     return this.favoredRepository.save(payload);
   }
 

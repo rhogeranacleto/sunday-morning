@@ -9,7 +9,10 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
-import { BankAccountType } from '../bank/bank-account-type.enum';
+import {
+  BankAccountType,
+  GeneralAccountType,
+} from '../bank/bank-account-type.enum';
 
 class BankDTO {
   @IsString()
@@ -40,6 +43,7 @@ export class FavoredDTO {
   @IsString()
   @MaxLength(4)
   @Matches(/^(?:^0*)[1-9][0-9]{0,3}$/)
+  @IsNotEmpty()
   public agency: string;
 
   @IsString()
@@ -47,8 +51,7 @@ export class FavoredDTO {
   @Matches(/^[xX0-9]{0,1}$/)
   public agencyDigit: string;
 
-  @IsEnum(BankAccountType)
-  @IsNotEmpty()
+  @IsNotEmpty({ always: true })
   public bankAccountType: BankAccountType;
 
   @IsString()
@@ -56,6 +59,7 @@ export class FavoredDTO {
   public bankAccount: string;
 
   @IsString()
+  @IsNotEmpty()
   public bankAccountDigit: string;
 
   @IsBoolean()
@@ -75,4 +79,28 @@ export class FavoredQueryDTO {
   @IsString()
   @IsOptional()
   public search?: string;
+}
+
+export class BancoDoBrasilAccountDTO {
+  @MaxLength(8)
+  @Matches(/^(?:^0*)[1-9][0-9]{0,7}$/)
+  public bankAccount: string;
+
+  @Matches(/^[xX0-9]{0,1}$/)
+  public bankAccountDigit: string;
+
+  @IsEnum(BankAccountType)
+  public bankAccountType: BankAccountType;
+}
+
+export class GenericBankDTO {
+  @MaxLength(11)
+  @Matches(/^(?:^0*)[1-9][0-9]{0,10}$/)
+  public bankAccount: string;
+
+  @Matches(/^[0-9]{0,1}$/)
+  public bankAccountDigit: string;
+
+  @IsEnum(GeneralAccountType)
+  public bankAccountType: BankAccountType;
 }
