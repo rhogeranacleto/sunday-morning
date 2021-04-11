@@ -25,6 +25,10 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
     }
   };
 
+  const remove = async () => {
+    await favoredService.deleteMany([favored.id as string]);
+  };
+
   return (
     <Box>
       {favored.name}
@@ -44,7 +48,7 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
         helperText={error}
       />
       <Button onClick={closeModal}>Voltar</Button>
-      <Button>Lixeira</Button>
+      <Button onClick={remove}>Lixeira</Button>
       <Button onClick={upsert}>Salvar</Button>
     </Box>
   );

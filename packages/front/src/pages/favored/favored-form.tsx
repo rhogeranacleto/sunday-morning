@@ -89,6 +89,10 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
     }
   };
 
+  const remove = async () => {
+    await favoredService.deleteMany([favored?.id as string]);
+  };
+
   return (
     <div>
       quais os dados
@@ -197,6 +201,7 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
           Cancelar
         </Link>
       )}
+      {favored?.id && <Button onClick={remove}>Lixeira</Button>}
       <Button onClick={upsert}>Salvar</Button>
     </div>
   );
