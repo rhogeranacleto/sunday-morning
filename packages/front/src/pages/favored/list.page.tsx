@@ -1,6 +1,8 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, IconButton, TextField } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
+import { AddCircle } from '@material-ui/icons';
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { COLUMNS } from './list-columns';
 import * as favoredService from './service';
 
@@ -63,8 +65,12 @@ export const FavoredListPage = () => {
   return (
     <div style={{ height: '100%' }}>
       <header>
+        Seus favorecidos
+        <Link to="/new" component={IconButton}>
+          <AddCircle />
+        </Link>
         <TextField
-          id="outlined-basic"
+          id="favored-search"
           label="Nome, CPF, agência ou conta"
           variant="outlined"
           value={search}
