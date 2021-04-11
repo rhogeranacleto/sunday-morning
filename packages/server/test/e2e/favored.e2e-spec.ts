@@ -211,25 +211,6 @@ describe('FavoredController (e2e)', () => {
     });
   });
 
-  it('PUT /favored/:id', async () => {
-    const bank = await getRepository(Bank).findOneOrFail();
-
-    const favored = await getRepository(Favored).save(
-      FavoredBuilder.build({ bank }),
-    );
-
-    const { body } = await request(app.getHttpServer())
-      .put(`/favored/${favored.id}`)
-      .send({ ...favored, email: 'change@email.com', agency: '7777' })
-      .expect(200);
-
-    expect(body).toMatchObject({
-      ...favored,
-      email: 'change@email.com',
-      agency: '7777',
-    });
-  });
-
   it('DELETE /favored', async () => {
     const bank = await getRepository(Bank).findOneOrFail();
 

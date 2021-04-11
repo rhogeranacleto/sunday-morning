@@ -6,7 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Bank } from '../bank/banck.entity';
-import { BankAccountType } from '../bank/bank-account-type.enum';
+import {
+  BankAccountType,
+  GeneralAccountType,
+} from '../bank/bank-account-type.enum';
 
 @Entity()
 export class Favored extends BaseEntity {
@@ -31,8 +34,8 @@ export class Favored extends BaseEntity {
   @Column({ nullable: true })
   public agencyDigit?: string;
 
-  @Column({ enum: BankAccountType })
-  public bankAccountType: BankAccountType;
+  @Column({ type: 'varchar' })
+  public bankAccountType: BankAccountType | GeneralAccountType;
 
   @Column()
   public bankAccount: string;

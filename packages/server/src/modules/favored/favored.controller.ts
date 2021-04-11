@@ -6,7 +6,6 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -46,14 +45,6 @@ export class FavoredControler {
     @Body(BankAccountValidationPipe) payload: FavoredDTO,
   ): Promise<Favored> {
     return this.favoredRepository.save(payload);
-  }
-
-  @Put(':id')
-  public update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() payload: FavoredDTO,
-  ): Promise<Favored> {
-    return this.favoredRepository.save({ id, ...payload });
   }
 
   @Delete()
