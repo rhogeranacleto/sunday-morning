@@ -1,8 +1,9 @@
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { getRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 import { Bank } from '../../src/modules/bank/banck.entity';
+import { BankAccountType } from '../../src/modules/bank/bank-account-type.enum';
 import { FavoredQueryDTO } from '../../src/modules/favored/favored.dto';
 import { Favored } from '../../src/modules/favored/favored.entity';
 import { FavoredModule } from '../../src/modules/favored/favored.module';
@@ -129,6 +130,84 @@ describe('FavoredController (e2e)', () => {
         .expect(201);
 
       expect(body).toMatchObject(payload);
+    });
+
+    describe('when is Banco do Brasil', () => {
+      it('should not save with wrong info', async () => {
+        const bank = await getRepository(Bank).findOneOrFail({ code: '001' });
+
+        const payload = FavoredBuilder.build({
+          bank,
+          bankAccount: '0000000000000',
+          bankAccountDigit: '987',
+        });
+
+        const { body } = await request(app.getHttpServer())
+          .post('/favored')
+          .send(payload)
+          .expect(422);
+
+        expect(body.message).toHaveLength(2);
+      });
+
+      it('should not save with wrong info', async () => {
+        const bank = await getRepository(Bank).findOneOrFail({ code: '001' });
+
+        const payload = FavoredBuilder.build({
+          bank,
+          bankAccount: '01234567',
+          bankAccountDigit: '7',
+        });
+
+        const { body } = await request(app.getHttpServer())
+          .post('/favored')
+          .send(payload)
+          .expect(201);
+
+        expect(body).toMatchObject(payload);
+      });
+    });
+
+    describe('when is not Banco do Brasil', () => {
+      it('should not save with wrong info', async () => {
+        const bank = await getRepository(Bank).findOneOrFail({
+          code: Not('001'),
+        });
+
+        const payload = FavoredBuilder.build({
+          bank,
+          bankAccount: '0000000000000',
+          bankAccountDigit: '9c7',
+          bankAccountType: BankAccountType.easy,
+        });
+
+        const { body } = await request(app.getHttpServer())
+          .post('/favored')
+          .send(payload)
+          .expect(422);
+
+        expect(body.message).toHaveLength(3);
+      });
+
+      it('should not save with wrong info', async () => {
+        const bank = await getRepository(Bank).findOneOrFail({
+          code: Not('001'),
+        });
+
+        const payload = FavoredBuilder.build({
+          bank,
+          bankAccount: '0123456789',
+          bankAccountDigit: '7',
+          bankAccountType: BankAccountType.current,
+        });
+
+        const { body } = await request(app.getHttpServer())
+          .post('/favored')
+          .send(payload)
+          .expect(201);
+
+        expect(body).toMatchObject(payload);
+      });
     });
   });
 
