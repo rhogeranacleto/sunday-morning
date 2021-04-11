@@ -1,6 +1,7 @@
 import {
   IsBoolean,
   IsEnum,
+  IsNotEmpty,
   IsNumberString,
   IsOptional,
   IsString,
@@ -17,15 +18,19 @@ class BankDTO {
 
 export class FavoredDTO {
   @IsString()
+  @IsNotEmpty()
   public name: string;
 
   @IsString()
+  @IsNotEmpty()
   public cpf_cnpj: string;
 
   @IsString()
+  @IsNotEmpty()
   public email: string;
 
   @ValidateNested()
+  @IsNotEmpty()
   public bank: BankDTO;
 
   @IsString()
@@ -39,9 +44,11 @@ export class FavoredDTO {
   public agencyDigit: string;
 
   @IsEnum(BankAccountType)
+  @IsNotEmpty()
   public bankAccountType: BankAccountType;
 
   @IsString()
+  @IsNotEmpty()
   public bankAccount: string;
 
   @IsString()
