@@ -1,8 +1,9 @@
-import { Button, IconButton, TextField } from '@material-ui/core';
+import { Button, IconButton, Modal, TextField } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
 import { AddCircle } from '@material-ui/icons';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { EditFavoredModal } from './edit-modal';
 import { COLUMNS } from './list-columns';
 import * as favoredService from './service';
 
@@ -56,6 +57,7 @@ export const FavoredListPage = () => {
     setSearch,
   } = useFavoreds();
   const [selection, setSelection] = useState<GridRowId[]>([]);
+  const [editFavored, setEditFavored] = useState();
 
   const deleteMany = async () => {
     await favoredService.deleteMany(selection as string[]);
@@ -103,7 +105,14 @@ export const FavoredListPage = () => {
           }
           selectionModel={selection}
           autoHeight
+          onCellClick={(e) => setEditFavored(e.row as any)}
         />
+        <Modal
+          open={Boolean(editFavored)}
+          onClose={() => setEditFavored(undefined)}
+        >
+          <EditFavoredModal favored={editFavored} />
+        </Modal>
       </div>
     </div>
   );
