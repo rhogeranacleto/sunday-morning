@@ -19,3 +19,17 @@ export const deleteMany = async (ids: string[]) => {
     body: JSON.stringify({ ids }),
   });
 };
+
+export const create = async (payload: Record<string, unknown>) => {
+  const res = await fetch(`${ENVIRONMENT.url}/favored`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+
+    throw error;
+  }
+};
