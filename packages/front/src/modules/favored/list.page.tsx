@@ -2,11 +2,11 @@ import { Box, Button, Modal, Snackbar } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
 import { Alert } from '@material-ui/lab';
 import { useCallback, useEffect, useState } from 'react';
-import { EditFavoredModal } from './edit-modal';
+import { COLUMNS } from './components/list/columns';
+import { FavoredListSearchContainer } from './components/list/search-container.component';
+import { EditFavoredModal } from './components/modal/modal.component';
+import { RemoveDialog } from './components/remove-dialog.component';
 import { IFavored, ISnackbarData } from './interfaces';
-import { COLUMNS } from './list-columns';
-import { FavoredListSearchContainer } from './list-search-container';
-import { RemoveDialog } from './remove-dialog';
 import * as favoredService from './service';
 
 const PAGE_SIZE = 10;

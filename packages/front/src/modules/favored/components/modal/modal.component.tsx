@@ -1,9 +1,9 @@
 import { Box, Grid, IconButton, Paper, Typography } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { FavoredForm } from './favored-form';
-import { FavoredView } from './favored-view';
-import { IFavored, ISnackbarData } from './interfaces';
-import { StatusChips } from './status-chips';
+import { IFavored, ISnackbarData } from '../../interfaces';
+import { FavoredForm } from '../form.component';
+import { StatusChips } from '../status-chips.component';
+import { FavoredView } from './view.component';
 
 interface IEditFavoredModalProps {
   favored: IFavored;

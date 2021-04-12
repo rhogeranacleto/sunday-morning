@@ -7,9 +7,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useCallback, useState } from 'react';
-import { IFavored, ISnackbarData } from './interfaces';
-import { RemoveDialog } from './remove-dialog';
-import * as favoredService from './service';
+import { IFavored, ISnackbarData } from '../../interfaces';
+import * as favoredService from '../../service';
+import { RemoveDialog } from '../remove-dialog.component';
 
 interface IFavoredViewProps {
   favored: IFavored;

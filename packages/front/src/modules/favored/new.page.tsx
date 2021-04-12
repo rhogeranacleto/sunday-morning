@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core';
-import { FavoredForm } from './favored-form';
+import { FavoredForm } from './components/form.component';
 
-export const FavoredNew = () => (
+export const FavoredNewPage = () => (
   <Container>
     <FavoredForm />
   </Container>

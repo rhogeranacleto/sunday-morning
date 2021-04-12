@@ -9,10 +9,10 @@ import {
 import { Autocomplete } from '@material-ui/lab';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import * as bankService from '../bank/service';
-import { IBank, IFavored, ISnackbarData } from './interfaces';
-import { RemoveDialog } from './remove-dialog';
-import * as favoredService from './service';
+import * as bankService from '../../bank/service';
+import { IBank, IFavored, ISnackbarData } from '../interfaces';
+import * as favoredService from '../service';
+import { RemoveDialog } from './remove-dialog.component';
 
 const errorsReducer = (
   state: { [key: string]: string | boolean },
