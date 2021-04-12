@@ -36,11 +36,11 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
     }
   };
 
-  const remove = async () => {
+  const remove = useCallback(async () => {
     await favoredService.deleteMany([favored.id as string]);
     closeDialog();
     closeModal({ text: 'Favorecido excluído', type: 'success' });
-  };
+  }, []);
 
   const closeDialog = useCallback(() => setOpenDialog(false), []);
 
