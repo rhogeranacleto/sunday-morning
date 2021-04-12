@@ -1,18 +1,11 @@
-import {
-  Button,
-  IconButton,
-  Modal,
-  Snackbar,
-  TextField,
-} from '@material-ui/core';
+import { Box, Button, Modal, Snackbar } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
-import { AddCircle } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { EditFavoredModal } from './edit-modal';
 import { IFavored, ISnackbarData } from './interfaces';
 import { COLUMNS } from './list-columns';
+import { FavoredListSearchContainer } from './list-search-container';
 import { RemoveDialog } from './remove-dialog';
 import * as favoredService from './service';
 
@@ -89,29 +82,19 @@ export const FavoredListPage = () => {
   const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
-    <div style={{ height: '100%' }}>
-      <header>
-        Seus favorecidos
-        <Link to="/new" component={IconButton}>
-          <AddCircle />
-        </Link>
-        <TextField
-          id="favored-search"
-          label="Nome, CPF, agência ou conta"
-          variant="outlined"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </header>
-      <Button
-        variant="contained"
-        color="secondary"
-        disabled={!selection.length}
-        onClick={() => setOpenDialog(true)}
-      >
-        Excluir selecionados
-      </Button>
-      <div style={{ flexGrow: 1 }}>
+    <Box>
+      <FavoredListSearchContainer search={search} setSearch={setSearch} />
+      <Box padding={3} paddingTop={0}>
+        <Box marginBottom={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            disabled={!selection.length}
+            onClick={() => setOpenDialog(true)}
+          >
+            Excluir selecionados
+          </Button>
+        </Box>
         <DataGrid
           getRowId={(row) => row.id}
           rows={favoreds}
@@ -137,7 +120,7 @@ export const FavoredListPage = () => {
             closeModal={closeModal}
           />
         </Modal>
-      </div>
+      </Box>
       <Snackbar
         open={Boolean(snackbarData)}
         autoHideDuration={5000}
@@ -152,6 +135,6 @@ export const FavoredListPage = () => {
         closeDialog={closeDialog}
         remove={deleteMany}
       />
-    </div>
+    </Box>
   );
 };
