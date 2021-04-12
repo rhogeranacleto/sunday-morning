@@ -88,6 +88,21 @@ describe('FavoredController (e2e)', () => {
         expect(favored[column]).toEqual(record[column]);
       },
     );
+
+    it('should filter by CC', async () => {
+      const record = await getRepository(Favored).findOneOrFail();
+
+      const [[favored]] = await getAll({
+        take: 1,
+        skip: 0,
+        search: `${record.bankAccount}-${record.bankAccountDigit}`,
+      });
+
+      expect(favored).not.toBeNull();
+      expect(`${favored.bankAccount}-${favored.bankAccountDigit}`).toEqual(
+        `${record.bankAccount}-${record.bankAccountDigit}`,
+      );
+    });
   });
 
   it('GET /favored/:id', async () => {
