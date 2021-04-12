@@ -1,4 +1,6 @@
+import { Chip } from '@material-ui/core';
 import { GridColumns } from '@material-ui/data-grid';
+import { IBank } from './interfaces';
 
 export const COLUMNS: GridColumns = [
   {
@@ -21,7 +23,7 @@ export const COLUMNS: GridColumns = [
     flex: 1,
     sortable: false,
     disableClickEventBubbling: true,
-    valueGetter: (params) => (params.getValue('bank') as { code: string }).code,
+    valueGetter: (params) => (params.getValue('bank') as IBank).code,
   },
   {
     field: 'agency',
@@ -31,11 +33,15 @@ export const COLUMNS: GridColumns = [
     disableClickEventBubbling: true,
   },
   {
-    field: 'bankAccount',
+    field: 'CC',
     headerName: 'CC',
     flex: 1,
     sortable: false,
     disableClickEventBubbling: true,
+    valueGetter: (params) =>
+      `${params.getValue('bankAccount')}-${params.getValue(
+        'bankAccountDigit',
+      )}`,
   },
   {
     field: 'draft',
@@ -43,5 +49,11 @@ export const COLUMNS: GridColumns = [
     flex: 1,
     sortable: false,
     disableClickEventBubbling: true,
+    renderCell: (params) => (
+      <Chip
+        label={params.value ? 'Rascunho' : 'Validado'}
+        color={params.value ? undefined : 'primary'}
+      />
+    ),
   },
 ];
