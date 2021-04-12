@@ -23,7 +23,7 @@ export const EditFavoredModal = ({
       justify="center"
       style={{ height: '100%' }}
     >
-      <Paper elevation={3} style={{ minWidth: '70%' }}>
+      <Paper elevation={3}>
         <Box p={2}>
           <Grid container justify="space-between">
             <Typography variant="h5">{favored.name}</Typography>

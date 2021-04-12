@@ -111,7 +111,7 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
   const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
-    <Box p={2}>
+    <Box p={2} minWidth={800}>
       <Box marginBottom={5}>
         <Typography variant="h5">Quais os dados do favorecido?</Typography>
       </Box>
