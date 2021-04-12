@@ -1,4 +1,4 @@
-import { Chip } from '@material-ui/core';
+import { Avatar, Chip } from '@material-ui/core';
 import { GridColumns } from '@material-ui/data-grid';
 import { IBank } from './interfaces';
 
@@ -18,12 +18,14 @@ export const COLUMNS: GridColumns = [
     disableClickEventBubbling: true,
   },
   {
-    field: 'bankImage',
+    field: 'bank',
     headerName: 'Banco',
     flex: 1,
     sortable: false,
     disableClickEventBubbling: true,
-    valueGetter: (params) => (params.getValue('bank') as IBank).code,
+    renderCell: (params) => (
+      <Avatar alt="Remy Sharp" src={(params.value as IBank).icon} />
+    ),
   },
   {
     field: 'agency',

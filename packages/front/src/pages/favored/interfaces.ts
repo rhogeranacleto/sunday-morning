@@ -3,6 +3,7 @@ import { Color } from '@material-ui/lab';
 export interface IBank {
   code: string;
   name: string;
+  icon: string;
 }
 
 export enum BankAccountType {

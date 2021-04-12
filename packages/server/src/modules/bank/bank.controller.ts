@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Bank } from './banck.entity';
 import { BankAccountType } from './bank-account-type.enum';
+import { Bank } from './bank.entity';
 
 @Controller('bank')
 export class BankController {

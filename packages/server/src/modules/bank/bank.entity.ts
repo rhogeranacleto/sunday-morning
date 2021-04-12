@@ -7,4 +7,7 @@ export class Bank extends BaseEntity {
 
   @Column()
   public name: string;
+
+  @Column({ nullable: true })
+  public icon: string;
 }

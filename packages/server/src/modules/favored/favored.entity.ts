@@ -5,11 +5,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Bank } from '../bank/banck.entity';
 import {
   BankAccountType,
   GeneralAccountType,
 } from '../bank/bank-account-type.enum';
+import { Bank } from '../bank/bank.entity';
 
 @Entity()
 export class Favored extends BaseEntity {
