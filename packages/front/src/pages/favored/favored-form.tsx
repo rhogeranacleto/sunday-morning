@@ -1,4 +1,11 @@
-import { Button, TextField } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Grid,
+  Icon,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
@@ -104,123 +111,179 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
   const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
-    <div>
-      quais os dados
-      <TextField
-        id="favored-name"
-        label="Qual o nome completo ou razão social do favorecido?"
-        variant="outlined"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        error={Boolean(errors.name)}
-        helperText={errors.name}
-      />
-      <TextField
-        id="favored-cpf"
-        label="Qual o CPF ou CNPJ?"
-        variant="outlined"
-        value={cpf_cnpj}
-        onChange={(e) => setCpfCnpj(e.target.value)}
-        error={Boolean(errors.cpf_cnpj)}
-        helperText={errors.cpf_cnpj}
-      />
-      <TextField
-        id="favored-email"
-        label="Qual o e-mail do favorecido?"
-        variant="outlined"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        error={Boolean(errors.email)}
-        helperText={errors.email}
-      />
-      <Autocomplete
-        id="favored-bank"
-        options={banks}
-        getOptionLabel={(option) => option.name}
-        value={bank}
-        onChange={(e, newValue) => setBank(newValue ?? undefined)}
-        disableClearable
-        renderInput={(params) => (
+    <Box p={2}>
+      <Box marginBottom={5}>
+        <Typography variant="h5">Quais os dados do favorecido?</Typography>
+      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
           <TextField
-            {...params}
-            label="Qual o banco do favorecido?"
+            fullWidth
+            id="favored-name"
+            label="Qual o nome completo ou razão social do favorecido?"
             variant="outlined"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            error={Boolean(errors.name)}
+            helperText={errors.name}
           />
-        )}
-      />
-      <TextField
-        id="favored-agency"
-        label="Qual a agência?"
-        variant="outlined"
-        value={agency}
-        onChange={(e) => setAgency(e.target.value)}
-        error={Boolean(errors.agency)}
-        helperText={errors.agency}
-      />
-      <TextField
-        id="favored-agency-digit"
-        label="Dígito"
-        variant="outlined"
-        value={agencyDigit}
-        onChange={(e) => setAgencyDigit(e.target.value)}
-        error={Boolean(errors.agencyDigit)}
-        helperText={errors.agencyDigit}
-      />
-      <Autocomplete
-        id="favored-account-type"
-        options={accountTypes}
-        getOptionLabel={(option: string) =>
-          option
-            .toLowerCase()
-            .replace('_', ' ')
-            .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase())
-        }
-        value={bankAccountType}
-        onChange={(e, newValue) => newValue && setBankAccountType(newValue)}
-        disableClearable
-        renderInput={(params) => (
+        </Grid>
+        <Grid item xs>
           <TextField
-            {...params}
-            label="Qual o tipo da conta?"
+            id="favored-cpf"
+            label="Qual o CPF ou CNPJ?"
             variant="outlined"
+            value={cpf_cnpj}
+            onChange={(e) => setCpfCnpj(e.target.value)}
+            error={Boolean(errors.cpf_cnpj)}
+            helperText={errors.cpf_cnpj}
           />
-        )}
-      />
-      <TextField
-        id="favored-account"
-        label="Qual a conta corrente?"
-        variant="outlined"
-        value={bankAccount}
-        onChange={(e) => setBankAccount(e.target.value)}
-        error={Boolean(errors.bankAccount)}
-        helperText={errors.bankAccount}
-      />
-      <TextField
-        id="favored-account-digit"
-        label="Dígito"
-        variant="outlined"
-        value={bankAccountDigit}
-        onChange={(e) => setBankAccountDigit(e.target.value)}
-        error={Boolean(errors.bankAccountDigit)}
-        helperText={errors.bankAccountDigit}
-      />
-      {closeModal ? (
-        <Button onClick={() => closeModal()}>Cancelar</Button>
-      ) : (
-        <Link to="/" component={Button}>
-          Cancelar
-        </Link>
-      )}
-      {favored?.id && (
-        <Button onClick={() => setOpenDialog(true)}>Lixeira</Button>
-      )}
-      <Button onClick={upsert}>Salvar</Button>
-      <RemoveDialog
-        open={openDialog}
-        closeDialog={closeDialog}
-        remove={remove}
-        name={favored?.name}
-      />
-    </div>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <TextField
+            fullWidth
+            id="favored-email"
+            label="Qual o e-mail do favorecido?"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={Boolean(errors.email)}
+            helperText={errors.email}
+          />
+        </Grid>
+      </Grid>
+      <Box marginBottom={5} marginTop={5}>
+        <Typography variant="h5">
+          Quais os dados do bancários do favorecido?
+        </Typography>
+      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Autocomplete
+            id="favored-bank"
+            options={banks}
+            getOptionLabel={(option) => option.name}
+            value={bank}
+            onChange={(e, newValue) => setBank(newValue ?? undefined)}
+            disableClearable
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Qual o banco do favorecido?"
+                variant="outlined"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <TextField
+            id="favored-agency"
+            label="Qual a agência?"
+            variant="outlined"
+            value={agency}
+            onChange={(e) => setAgency(e.target.value)}
+            error={Boolean(errors.agency)}
+            helperText={errors.agency}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <TextField
+            id="favored-agency-digit"
+            label="Dígito"
+            variant="outlined"
+            value={agencyDigit}
+            onChange={(e) => setAgencyDigit(e.target.value)}
+            error={Boolean(errors.agencyDigit)}
+            helperText={errors.agencyDigit}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Autocomplete
+            id="favored-account-type"
+            options={accountTypes}
+            getOptionLabel={(option: string) =>
+              option
+                .toLowerCase()
+                .replace('_', ' ')
+                .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) =>
+                  match.toUpperCase(),
+                )
+            }
+            value={bankAccountType}
+            onChange={(e, newValue) => newValue && setBankAccountType(newValue)}
+            disableClearable
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Qual o tipo da conta?"
+                variant="outlined"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <TextField
+            id="favored-account"
+            label="Qual a conta corrente?"
+            variant="outlined"
+            value={bankAccount}
+            onChange={(e) => setBankAccount(e.target.value)}
+            error={Boolean(errors.bankAccount)}
+            helperText={errors.bankAccount}
+          />
+        </Grid>
+
+        <Grid item xs={2}>
+          <TextField
+            id="favored-account-digit"
+            label="Dígito"
+            variant="outlined"
+            value={bankAccountDigit}
+            onChange={(e) => setBankAccountDigit(e.target.value)}
+            error={Boolean(errors.bankAccountDigit)}
+            helperText={errors.bankAccountDigit}
+          />
+        </Grid>
+      </Grid>
+      <Grid container justify="space-between" spacing={5}>
+        <Grid item xs>
+          {closeModal ? (
+            <Button onClick={() => closeModal()} variant="contained">
+              Voltar
+            </Button>
+          ) : (
+            <Link to="/" component={Button}>
+              Cancelar
+            </Link>
+          )}
+        </Grid>
+        <Grid item>
+          {favored?.id && (
+            <Button
+              onClick={() => setOpenDialog(true)}
+              variant="contained"
+              color="secondary"
+            >
+              <Icon>delete_forever_rounded</Icon>
+            </Button>
+          )}
+        </Grid>
+        <Grid item>
+          <Button onClick={upsert} variant="contained" color="primary">
+            Salvar
+          </Button>
+        </Grid>
+        <RemoveDialog
+          open={openDialog}
+          closeDialog={closeDialog}
+          remove={remove}
+          name={favored?.name}
+        />
+      </Grid>
+    </Box>
   );
 };

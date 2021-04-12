@@ -1,7 +1,9 @@
-import { Grid, Paper } from '@material-ui/core';
+import { Box, Grid, IconButton, Paper, Typography } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import { FavoredForm } from './favored-form';
 import { FavoredView } from './favored-view';
 import { IFavored, ISnackbarData } from './interfaces';
+import { StatusChips } from './status-chips';
 
 interface IEditFavoredModalProps {
   favored: IFavored;
@@ -12,6 +14,8 @@ export const EditFavoredModal = ({
   favored,
   closeModal,
 }: IEditFavoredModalProps) => {
+  const FormComponent = favored.draft ? FavoredForm : FavoredView;
+
   return (
     <Grid
       container
@@ -19,12 +23,19 @@ export const EditFavoredModal = ({
       justify="center"
       style={{ height: '100%' }}
     >
-      <Paper elevation={3}>
-        {favored.draft ? (
-          <FavoredForm favored={favored} closeModal={closeModal} />
-        ) : (
-          <FavoredView favored={favored} closeModal={closeModal} />
-        )}
+      <Paper elevation={3} style={{ minWidth: '70%' }}>
+        <Box p={2}>
+          <Grid container justify="space-between">
+            <Typography variant="h5">{favored.name}</Typography>
+            <IconButton size="small" onClick={() => closeModal()}>
+              <Close />
+            </IconButton>
+          </Grid>
+        </Box>
+        <Box p={2}>
+          <StatusChips draft={favored.draft} />
+        </Box>
+        <FormComponent favored={favored} closeModal={closeModal} />
       </Paper>
     </Grid>
   );

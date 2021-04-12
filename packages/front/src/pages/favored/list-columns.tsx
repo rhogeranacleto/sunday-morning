@@ -1,6 +1,7 @@
-import { Avatar, Chip } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 import { GridColumns } from '@material-ui/data-grid';
 import { IBank } from './interfaces';
+import { StatusChips } from './status-chips';
 
 export const COLUMNS: GridColumns = [
   {
@@ -51,11 +52,6 @@ export const COLUMNS: GridColumns = [
     flex: 1,
     sortable: false,
     disableClickEventBubbling: true,
-    renderCell: (params) => (
-      <Chip
-        label={params.value ? 'Rascunho' : 'Validado'}
-        color={params.value ? undefined : 'primary'}
-      />
-    ),
+    renderCell: (params) => <StatusChips draft={params.value as boolean} />,
   },
 ];
