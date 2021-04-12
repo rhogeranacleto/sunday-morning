@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { EditFavoredModal } from './edit-modal';
 import { IFavored, ISnackbarData } from './interfaces';
 import { COLUMNS } from './list-columns';
+import { RemoveDialog } from './remove-dialog';
 import * as favoredService from './service';
 
 const PAGE_SIZE = 10;
@@ -67,10 +68,12 @@ export const FavoredListPage = () => {
   const [selection, setSelection] = useState<GridRowId[]>([]);
   const [editFavored, setEditFavored] = useState<IFavored | undefined>();
   const [snackbarData, setSnackbarData] = useState<ISnackbarData>();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const deleteMany = async () => {
     await favoredService.deleteMany(selection as string[]);
     await fetchFavoreds();
+    closeDialog();
     setSnackbarData({
       text: 'Favorecido removido com sucesso',
       type: 'success',
@@ -83,6 +86,7 @@ export const FavoredListPage = () => {
     snackbar && fetchFavoreds();
   }, []);
   const closeSnackbar = useCallback(() => setSnackbarData(undefined), []);
+  const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
     <div style={{ height: '100%' }}>
@@ -103,7 +107,7 @@ export const FavoredListPage = () => {
         variant="contained"
         color="secondary"
         disabled={!selection.length}
-        onClick={deleteMany}
+        onClick={() => setOpenDialog(true)}
       >
         Excluir selecionados
       </Button>
@@ -143,6 +147,11 @@ export const FavoredListPage = () => {
           {snackbarData?.text}
         </Alert>
       </Snackbar>
+      <RemoveDialog
+        open={openDialog}
+        closeDialog={closeDialog}
+        remove={deleteMany}
+      />
     </div>
   );
 };

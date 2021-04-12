@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@material-ui/core';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IFavored, ISnackbarData } from './interfaces';
+import { RemoveDialog } from './remove-dialog';
 import * as favoredService from './service';
 
 interface IFavoredViewProps {
@@ -11,6 +12,7 @@ interface IFavoredViewProps {
 export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
   const [email, setEmail] = useState(favored.email);
   const [error, setError] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
 
   const upsert = async () => {
     try {
@@ -29,7 +31,11 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
 
   const remove = async () => {
     await favoredService.deleteMany([favored.id as string]);
+    closeDialog();
+    closeModal({ text: 'Favorecido excluído', type: 'success' });
   };
+
+  const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
     <Box>
@@ -50,8 +56,14 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
         helperText={error}
       />
       <Button onClick={() => closeModal()}>Voltar</Button>
-      <Button onClick={remove}>Lixeira</Button>
+      <Button onClick={() => setOpenDialog(true)}>Lixeira</Button>
       <Button onClick={upsert}>Salvar</Button>
+      <RemoveDialog
+        open={openDialog}
+        closeDialog={closeDialog}
+        remove={remove}
+        name={favored.name}
+      />
     </Box>
   );
 };

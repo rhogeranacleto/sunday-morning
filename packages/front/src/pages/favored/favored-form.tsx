@@ -1,9 +1,10 @@
 import { Button, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as bankService from '../bank/service';
 import { IBank, IFavored, ISnackbarData } from './interfaces';
+import { RemoveDialog } from './remove-dialog';
 import * as favoredService from './service';
 
 const errorsReducer = (
@@ -54,6 +55,7 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
   const [banks, setBanks] = useState<IBank[]>([]);
   const [accountTypes, setAccountTypes] = useState<string[]>([]);
   const [errors, dispatchError] = useReducer(errorsReducer, {});
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     Promise.all([bankService.getAll(), bankService.getAccountTypes()]).then(
@@ -95,7 +97,11 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
 
   const remove = async () => {
     await favoredService.deleteMany([favored?.id as string]);
+    closeDialog();
+    closeModal?.({ text: 'Favorecido excluído', type: 'success' });
   };
+
+  const closeDialog = useCallback(() => setOpenDialog(false), []);
 
   return (
     <div>
@@ -205,8 +211,16 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
           Cancelar
         </Link>
       )}
-      {favored?.id && <Button onClick={remove}>Lixeira</Button>}
+      {favored?.id && (
+        <Button onClick={() => setOpenDialog(true)}>Lixeira</Button>
+      )}
       <Button onClick={upsert}>Salvar</Button>
+      <RemoveDialog
+        open={openDialog}
+        closeDialog={closeDialog}
+        remove={remove}
+        name={favored?.name}
+      />
     </div>
   );
 };
