@@ -16,7 +16,9 @@ export class BankAccountValidationPipe implements PipeTransform {
     const errors = await validate(payload);
 
     if (errors.length) {
-      throw new UnprocessableEntityException(errors);
+      throw new UnprocessableEntityException(
+        errors.map((error) => Object.values(error.constraints)[0]),
+      );
     }
 
     return value;

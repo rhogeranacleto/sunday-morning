@@ -1,9 +1,9 @@
 import { Button, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as bankService from '../bank/service';
-import { IBank, IFavored } from './interfaces';
+import { IBank, IFavored, ISnackbarData } from './interfaces';
 import * as favoredService from './service';
 
 const errorsReducer = (
@@ -33,10 +33,11 @@ const errorsReducer = (
 
 interface IFavoredFormProps {
   favored?: IFavored;
-  closeModal?: () => void;
+  closeModal?: (snackbar?: ISnackbarData) => void;
 }
 
 export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
+  const history = useHistory();
   const [name, setName] = useState(favored?.name ?? '');
   const [cpf_cnpj, setCpfCnpj] = useState(favored?.cpf_cnpj ?? '');
   const [email, setEmail] = useState(favored?.email ?? '');
@@ -82,6 +83,9 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
         bankAccount,
         bankAccountDigit,
       });
+
+      closeModal?.({ text: 'Favorecido salvo', type: 'success' });
+      history.push('/');
     } catch (e) {
       if (e.statusCode === 422) {
         dispatchError(e.message);
@@ -195,7 +199,7 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
         helperText={errors.bankAccountDigit}
       />
       {closeModal ? (
-        <Button onClick={closeModal}>Cancelar</Button>
+        <Button onClick={() => closeModal()}>Cancelar</Button>
       ) : (
         <Link to="/" component={Button}>
           Cancelar

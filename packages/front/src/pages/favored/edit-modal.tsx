@@ -1,11 +1,11 @@
 import { Grid, Paper } from '@material-ui/core';
 import { FavoredForm } from './favored-form';
 import { FavoredView } from './favored-view';
-import { IFavored } from './interfaces';
+import { IFavored, ISnackbarData } from './interfaces';
 
 interface IEditFavoredModalProps {
   favored: IFavored;
-  closeModal: () => void;
+  closeModal: (snackbar?: ISnackbarData) => void;
 }
 
 export const EditFavoredModal = ({

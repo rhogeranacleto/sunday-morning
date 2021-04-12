@@ -1,10 +1,17 @@
-import { Button, IconButton, Modal, TextField } from '@material-ui/core';
+import {
+  Button,
+  IconButton,
+  Modal,
+  Snackbar,
+  TextField,
+} from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
 import { AddCircle } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EditFavoredModal } from './edit-modal';
-import { IFavored } from './interfaces';
+import { IFavored, ISnackbarData } from './interfaces';
 import { COLUMNS } from './list-columns';
 import * as favoredService from './service';
 
@@ -59,13 +66,23 @@ export const FavoredListPage = () => {
   } = useFavoreds();
   const [selection, setSelection] = useState<GridRowId[]>([]);
   const [editFavored, setEditFavored] = useState<IFavored | undefined>();
+  const [snackbarData, setSnackbarData] = useState<ISnackbarData>();
 
   const deleteMany = async () => {
     await favoredService.deleteMany(selection as string[]);
     await fetchFavoreds();
+    setSnackbarData({
+      text: 'Favorecido removido com sucesso',
+      type: 'success',
+    });
   };
 
-  const closeModal = useCallback(() => setEditFavored(undefined), []);
+  const closeModal = useCallback((snackbar?: ISnackbarData) => {
+    setEditFavored(undefined);
+    setSnackbarData(snackbar);
+    snackbar && fetchFavoreds();
+  }, []);
+  const closeSnackbar = useCallback(() => setSnackbarData(undefined), []);
 
   return (
     <div style={{ height: '100%' }}>
@@ -108,15 +125,24 @@ export const FavoredListPage = () => {
           }
           selectionModel={selection}
           autoHeight
-          onCellClick={(e) => setEditFavored(e.row as IFavored)}
+          onCellClick={(e) => e.colIndex && setEditFavored(e.row as IFavored)}
         />
-        <Modal open={Boolean(editFavored)} onClose={closeModal}>
+        <Modal open={Boolean(editFavored)} onClose={() => closeModal()}>
           <EditFavoredModal
             favored={editFavored as IFavored}
             closeModal={closeModal}
           />
         </Modal>
       </div>
+      <Snackbar
+        open={Boolean(snackbarData)}
+        autoHideDuration={5000}
+        onClose={closeSnackbar}
+      >
+        <Alert onClose={closeSnackbar} severity={snackbarData?.type}>
+          {snackbarData?.text}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import { Box, Button, TextField } from '@material-ui/core';
 import { useState } from 'react';
-import { IFavored } from './interfaces';
+import { IFavored, ISnackbarData } from './interfaces';
 import * as favoredService from './service';
 
 interface IFavoredViewProps {
   favored: IFavored;
-  closeModal: () => void;
+  closeModal: (snackbar?: ISnackbarData) => void;
 }
 
 export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
@@ -18,6 +18,8 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
         ...favored,
         email,
       });
+
+      closeModal({ text: 'Favorecido salvo', type: 'success' });
     } catch (e) {
       if (e.statusCode === 422) {
         setError(e.message[0]);
@@ -47,7 +49,7 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
         error={Boolean(error)}
         helperText={error}
       />
-      <Button onClick={closeModal}>Voltar</Button>
+      <Button onClick={() => closeModal()}>Voltar</Button>
       <Button onClick={remove}>Lixeira</Button>
       <Button onClick={upsert}>Salvar</Button>
     </Box>

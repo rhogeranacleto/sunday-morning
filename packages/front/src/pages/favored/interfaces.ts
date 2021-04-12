@@ -1,3 +1,5 @@
+import { Color } from '@material-ui/lab';
+
 export interface IBank {
   code: string;
   name: string;
@@ -21,4 +23,9 @@ export interface IFavored {
   bankAccount: string;
   bankAccountDigit: string;
   draft: boolean;
+}
+
+export interface ISnackbarData {
+  text: string;
+  type: Color;
 }
