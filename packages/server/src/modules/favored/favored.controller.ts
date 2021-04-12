@@ -8,31 +8,20 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
 import { FavoredDTO, FavoredQueryDTO } from './favored.dto';
 import { Favored } from './favored.entity';
 import { BankAccountValidationPipe } from './favored.pipe';
+import { FavoredRepository } from './favored.repository';
 
 @Controller('favored')
 export class FavoredControler {
-  constructor(
-    @InjectRepository(Favored) private favoredRepository: Repository<Favored>,
-  ) {}
+  constructor(private favoredRepository: FavoredRepository) {}
 
   @Get()
   public getAll(
-    @Query() { take, search, skip }: FavoredQueryDTO,
+    @Query() querySearch: FavoredQueryDTO,
   ): Promise<[Favored[], number]> {
-    return this.favoredRepository.findAndCount({
-      take,
-      skip,
-      where: search && [
-        { name: ILike(`%${search}%`) },
-        { cpf_cnpj: ILike(`%${search}%`) },
-        { agency: ILike(`%${search}%`) },
-      ],
-    });
+    return this.favoredRepository.getAll(querySearch);
   }
 
   @Get(':id')
