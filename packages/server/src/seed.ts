@@ -32,7 +32,7 @@ export const seed = async (): Promise<void> => {
   ]);
 
   await getRepository(Favored).save(
-    new Array(20)
+    new Array(30)
       .fill(new Favored())
       .map(() =>
         FavoredBuilder.build({ bank: faker.random.arrayElement(banks) }),

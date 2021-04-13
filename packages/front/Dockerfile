@@ -5,8 +5,10 @@ WORKDIR /usr/src/app/client
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn
+RUN yarn --production
 
 COPY . .
+
+RUN cp sample.env .env
 
 CMD ["yarn", "start"]
