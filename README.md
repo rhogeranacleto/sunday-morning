@@ -81,4 +81,4 @@ yarn test:e2e
 
 ### Important Notes
 
-> The server always will seed the database with the same 4 banks, and new 30 favoreds. Since I have to create a populated database, this is the easy way I find to do; since this is a test I don't think is a problem, but I know that this will never happen in a real situation.
+> The server always will seed the database with the same 4 banks, and new 30 favoreds in the project start. Since I have to create a populated database, this is the easy way I find to do; since this is a test I don't think is a problem, but I know that this will never happen in a real situation.
