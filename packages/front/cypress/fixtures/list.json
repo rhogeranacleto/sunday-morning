@@ -1,0 +1,175 @@
+[
+  [
+    {
+      "id": "2f1908a0-1da9-46ab-b470-00695c6097cd",
+      "name": "Pat O'Connell",
+      "cpf_cnpj": "103.730.691-08",
+      "email": "Treva.Reilly@yahoo.com",
+      "agency": "9577",
+      "agencyDigit": "0",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "881919",
+      "bankAccountDigit": "7",
+      "draft": true,
+      "bank": {
+        "code": "237",
+        "name": "Bradesco",
+        "icon": "https://bandnewscwb.b-cdn.net/band/wp-content/uploads/2019/05/BRADESCO-LOGO.png"
+      }
+    },
+    {
+      "id": "1258792a-1b68-4e40-800c-f07e4ec053cc",
+      "name": "Gordon Jaskolski",
+      "cpf_cnpj": "626.727.315-16",
+      "email": "Hilma_Smitham@gmail.com",
+      "agency": "7145",
+      "agencyDigit": "8",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "553348",
+      "bankAccountDigit": "8",
+      "draft": true,
+      "bank": {
+        "code": "237",
+        "name": "Bradesco",
+        "icon": "https://bandnewscwb.b-cdn.net/band/wp-content/uploads/2019/05/BRADESCO-LOGO.png"
+      }
+    },
+    {
+      "id": "1c9a365a-4d40-42ed-854e-1cbb92a9cbbe",
+      "name": "Mrs. Salvatore Keebler",
+      "cpf_cnpj": "052.961.628-74",
+      "email": "Wanda_Auer@yahoo.com",
+      "agency": "2150",
+      "agencyDigit": "4",
+      "bankAccountType": "CONTA_POUPANCA",
+      "bankAccount": "404343",
+      "bankAccountDigit": "4",
+      "draft": false,
+      "bank": {
+        "code": "237",
+        "name": "Bradesco",
+        "icon": "https://bandnewscwb.b-cdn.net/band/wp-content/uploads/2019/05/BRADESCO-LOGO.png"
+      }
+    },
+    {
+      "id": "4b3e454c-01f4-4560-8020-a2c93e5fd530",
+      "name": "Mrs. Brendan Prosacco",
+      "cpf_cnpj": "485.238.604-54",
+      "email": "Danyka.Ankunding@yahoo.com",
+      "agency": "3960",
+      "agencyDigit": "0",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "413929",
+      "bankAccountDigit": "4",
+      "draft": false,
+      "bank": {
+        "code": "756",
+        "name": "Sicoob",
+        "icon": "https://pbs.twimg.com/profile_images/1096046807824646144/JKE5Mlhu.png"
+      }
+    },
+    {
+      "id": "1ba2d572-1fc0-4c29-929f-bf7601ab3705",
+      "name": "Lowell Watsica",
+      "cpf_cnpj": "750.082.810-11",
+      "email": "Gerhard.Haag28@gmail.com",
+      "agency": "4290",
+      "agencyDigit": "5",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "540466",
+      "bankAccountDigit": "8",
+      "draft": false,
+      "bank": {
+        "code": "756",
+        "name": "Sicoob",
+        "icon": "https://pbs.twimg.com/profile_images/1096046807824646144/JKE5Mlhu.png"
+      }
+    },
+    {
+      "id": "00fc6cdd-fb95-4c66-ac02-b18d222ecabc",
+      "name": "Kelly Bogan",
+      "cpf_cnpj": "251.590.624-31",
+      "email": "Eleanore13@gmail.com",
+      "agency": "2234",
+      "agencyDigit": "6",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "277419",
+      "bankAccountDigit": "8",
+      "draft": false,
+      "bank": {
+        "code": "756",
+        "name": "Sicoob",
+        "icon": "https://pbs.twimg.com/profile_images/1096046807824646144/JKE5Mlhu.png"
+      }
+    },
+    {
+      "id": "2593022c-f9e9-4c74-90b2-18d700066aac",
+      "name": "Nathan Block MD",
+      "cpf_cnpj": "872.234.017-06",
+      "email": "Agnes_Padberg@yahoo.com",
+      "agency": "0347",
+      "agencyDigit": "2",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "124784",
+      "bankAccountDigit": "3",
+      "draft": true,
+      "bank": {
+        "code": "756",
+        "name": "Sicoob",
+        "icon": "https://pbs.twimg.com/profile_images/1096046807824646144/JKE5Mlhu.png"
+      }
+    },
+    {
+      "id": "466222fc-42c4-4d69-ae0a-caf3ebd33691",
+      "name": "Ron Jakubowski",
+      "cpf_cnpj": "413.072.747-35",
+      "email": "Lily.Wyman@hotmail.com",
+      "agency": "7319",
+      "agencyDigit": "1",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "876930",
+      "bankAccountDigit": "7",
+      "draft": false,
+      "bank": {
+        "code": "001",
+        "name": "Banco do Brasil",
+        "icon": "https://image.flaticon.com/icons/png/512/195/195488.png"
+      }
+    },
+    {
+      "id": "02aff639-a113-448d-bab2-f056861e6f61",
+      "name": "Kerry Gutmann",
+      "cpf_cnpj": "362.810.609-16",
+      "email": "Ambrose46@gmail.com",
+      "agency": "3219",
+      "agencyDigit": "5",
+      "bankAccountType": "CONTA_POUPANCA",
+      "bankAccount": "185919",
+      "bankAccountDigit": "5",
+      "draft": true,
+      "bank": {
+        "code": "001",
+        "name": "Banco do Brasil",
+        "icon": "https://image.flaticon.com/icons/png/512/195/195488.png"
+      }
+    },
+    {
+      "id": "4584c8c9-6389-479a-8772-da9871ba2725",
+      "name": "Roxanne Hirthe",
+      "cpf_cnpj": "714.361.285-03",
+      "email": "Gunner90@gmail.com",
+      "agency": "8292",
+      "agencyDigit": "6",
+      "bankAccountType": "CONTA_CORRENTE",
+      "bankAccount": "396470",
+      "bankAccountDigit": "6",
+      "draft": false,
+      "bank": {
+        "code": "001",
+        "name": "Banco do Brasil",
+        "icon": "https://image.flaticon.com/icons/png/512/195/195488.png"
+      }
+    }
+  ],
+  30
+]
