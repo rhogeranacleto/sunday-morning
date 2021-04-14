@@ -79,6 +79,22 @@ cd packages/server
 yarn test:e2e
 ```
 
+#### Front
+
+Tests in frontend are made in Cypress. So what you have to do is:
+
+```sh
+cd packages/front
+yarn start
+
+## then
+yarn cypress:open
+## or
+yarn cypress:run
+```
+
+> You will need to keep front up to run this, but you do not need server up.
+
 ### Important Notes
 
 > The server always will seed the database with the same 4 banks, and new 30 favoreds in the project start. Since I have to create a populated database, this is the easy way I find to do; since this is a test I don't think is a problem, but I know that this will never happen in a real situation.
