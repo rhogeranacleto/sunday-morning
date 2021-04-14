@@ -9,6 +9,4 @@ RUN yarn --production
 
 COPY . .
 
-RUN cp sample.env .env
-
 CMD ["yarn", "start"]

@@ -7,12 +7,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - '5432:5432'
+    networks:
+      - nesjs-network
     volumes:
       - ./infra/init:/docker-entrypoint-initdb.d/
 
   server:
     container_name: server
-    image: nestjs-api-dev:1.0.0
     build:
       context: ./packages/server
       dockerfile: Dockerfile
@@ -25,6 +26,7 @@ services:
       - ./packages/server:/usr/src/app/server
       - /usr/src/app/server/node_modules
     environment:
+      - PORT=5000
       - TYPEORM_CONNECTION=postgres
       - TYPEORM_HOST=postgres
       - TYPEORM_USERNAME=postgres
@@ -32,7 +34,7 @@ services:
       - TYPEORM_DATABASE=postgres
       - TYPEORM_PORT=5432
       - TYPEORM_SYNCHRONIZE=true
-      - TYPEORM_ENTITIES=./dist/**/**.entity{.ts,.js}
+      - TYPEORM_ENTITIES=./dist/**/*.entity.js
     restart: unless-stopped
     depends_on:
       - postgres
@@ -49,6 +51,8 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:5000
+      - DISABLE_ESLINT_PLUGIN=true
 
 networks:
   nesjs-network:

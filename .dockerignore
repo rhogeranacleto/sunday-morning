@@ -1,7 +1,9 @@
 node_modules
+**/node_modules
 infra
 dist
 .github
 .vscode
-.env
-ormconfig.json
+**/.env
+**/ormconfig.json
+**/.eslintrc.json

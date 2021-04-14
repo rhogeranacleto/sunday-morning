@@ -9,8 +9,8 @@ RUN yarn
 
 COPY . .
 
-RUN cp ormconfig.dev.json ormconfig.json
-
 RUN yarn build
+
+EXPOSE 5000
 
 CMD ["yarn", "start:prod"]
