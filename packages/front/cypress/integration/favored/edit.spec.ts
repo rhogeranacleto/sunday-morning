@@ -7,6 +7,8 @@ describe('Favored edit', () => {
     cy.intercept({ method: 'POST', pathname: '/favored' }, { body: '' }).as(
       'favored-edit',
     );
+    cy.intercept('bank', { fixture: 'banks' });
+    cy.intercept('bank/account-types', { fixture: 'account-types' });
     cy.visit('/');
   });
 

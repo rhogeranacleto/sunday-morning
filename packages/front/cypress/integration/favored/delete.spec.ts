@@ -5,9 +5,12 @@ describe('Favored delete', () => {
       { fixture: 'list' },
     ).as('favored-list');
 
-    cy.intercept({ method: 'DELETE', pathname: '/favored' }).as(
+    cy.intercept({ method: 'DELETE', pathname: '/favored' }, { body: '' }).as(
       'delete-favored',
     );
+
+    cy.intercept('bank', { fixture: 'banks' });
+    cy.intercept('bank/account-types', { fixture: 'account-types' });
 
     cy.visit('/');
   });

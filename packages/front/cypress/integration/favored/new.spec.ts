@@ -4,7 +4,8 @@ describe('Favored new', () => {
       { method: 'GET', pathname: '/favored' },
       { fixture: 'list' },
     ).as('favored-list');
-
+    cy.intercept('bank', { fixture: 'banks' });
+    cy.intercept('bank/account-types', { fixture: 'account-types' });
     cy.visit('/new');
   });
 
