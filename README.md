@@ -68,7 +68,7 @@ Also you can run the project manually (and for dev reasons). You will need to ha
 
 #### Server
 
-The server has only e2e tests, since has no business rules only simple api.
+The server has only e2e tests, since has no business rules only a simple api.
 
 To run the e2e test you will have to keep you postgres instance up and with a schema called **test**. The `docker-compose up postgres` can do it for you. Optionally you can change this configuration in the `ormconfig.json` file, changing the `test` config to use `"schema": "public"`.
 
@@ -97,4 +97,4 @@ yarn cypress:run
 
 ### Important Notes
 
-> The server always will seed the database with the same 4 banks, and new 30 favoreds in the project start. Since I have to create a populated database, this is the easy way I find to do; since this is a test I don't think is a problem, but I know that this will never happen in a real situation.
+> The server always will seed the database with the same 4 banks, and new 30 favoreds in the project start. Since I have to create a populated database, this is the easiest way I find to do this; since this is a test I don't think is a problem, but I know that this will never happen in a real situation.
