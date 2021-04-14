@@ -1,16 +1,5 @@
 import { Color } from '@material-ui/lab';
-
-export interface IBank {
-  code: string;
-  name: string;
-  icon: string;
-}
-
-export enum BankAccountType {
-  current = 'CONTA_CORRENTE',
-  savings = 'CONTA_POUPANCA',
-  easy = 'CONTA_FACIL',
-}
+import { IBank, BankAccountType } from '../bank/interfaces';
 
 export interface IFavored {
   id?: string;

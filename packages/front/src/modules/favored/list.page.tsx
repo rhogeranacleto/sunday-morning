@@ -1,51 +1,14 @@
 import { Box, Button, Modal, Snackbar } from '@material-ui/core';
 import { DataGrid, GridRowId } from '@material-ui/data-grid';
 import { Alert } from '@material-ui/lab';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { COLUMNS } from './components/list/columns';
 import { FavoredListSearchContainer } from './components/list/search-container.component';
 import { EditFavoredModal } from './components/modal/modal.component';
 import { RemoveDialog } from './components/remove-dialog.component';
 import { IFavored, ISnackbarData } from './interfaces';
 import * as favoredService from './service';
-
-const PAGE_SIZE = 10;
-
-const useFavoreds = () => {
-  const [favoreds, setFavoreds] = useState<IFavored[]>([]);
-  const [totalRow, setTotalRow] = useState(0);
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState('');
-
-  const fetchFavoreds = useCallback(async () => {
-    const skip = page * PAGE_SIZE;
-
-    setLoading(true);
-
-    const [rows, total] = await favoredService.getAll(skip, search);
-
-    setFavoreds(rows);
-    setTotalRow(total);
-
-    setLoading(false);
-  }, [page, search]);
-
-  useEffect(() => {
-    fetchFavoreds();
-  }, [fetchFavoreds]);
-
-  return {
-    favoreds,
-    totalRow,
-    setPage,
-    loading,
-    page,
-    fetchFavoreds,
-    search,
-    setSearch,
-  };
-};
+import { useFavoreds } from './use-favoreds.hook';
 
 export const FavoredListPage = () => {
   const {
@@ -68,7 +31,7 @@ export const FavoredListPage = () => {
     await fetchFavoreds();
     closeDialog();
     setSnackbarData({
-      text: 'Favorecido removido com sucesso',
+      text: 'Favorecido removido!',
       type: 'success',
     });
   };

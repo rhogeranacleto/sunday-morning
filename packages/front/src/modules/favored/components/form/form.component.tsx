@@ -9,35 +9,12 @@ import {
 import { Autocomplete } from '@material-ui/lab';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import * as bankService from '../../bank/service';
-import { IBank, IFavored, ISnackbarData } from '../interfaces';
-import * as favoredService from '../service';
-import { RemoveDialog } from './remove-dialog.component';
-
-const errorsReducer = (
-  state: { [key: string]: string | boolean },
-  action: string[],
-) => {
-  const fields = [
-    'name',
-    'cpf_cnpj',
-    'email',
-    'bank',
-    'agency',
-    'agencyDigit',
-    'bankAccountType',
-    'bankAccount',
-    'bankAccountDigit',
-  ];
-
-  for (const field of fields) {
-    const messageError = action.find((error) => error.includes(field));
-
-    state = { ...state, [field]: messageError ?? false };
-  }
-
-  return state;
-};
+import { IBank } from '../../../bank/interfaces';
+import * as bankService from '../../../bank/service';
+import { IFavored, ISnackbarData } from '../../interfaces';
+import * as favoredService from '../../service';
+import { RemoveDialog } from '../remove-dialog.component';
+import { errorsReducer } from './errors.reducer';
 
 interface IFavoredFormProps {
   favored?: IFavored;
@@ -102,11 +79,11 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
     }
   };
 
-  const remove = async () => {
+  const remove = useCallback(async () => {
     await favoredService.deleteMany([favored?.id as string]);
     closeDialog();
-    closeModal?.({ text: 'Favorecido excluído', type: 'success' });
-  };
+    closeModal?.({ text: 'Favorecido excluído!', type: 'success' });
+  }, []);
 
   const closeDialog = useCallback(() => setOpenDialog(false), []);
 
@@ -267,6 +244,7 @@ export const FavoredForm = ({ favored, closeModal }: IFavoredFormProps) => {
               onClick={() => setOpenDialog(true)}
               variant="contained"
               color="secondary"
+              id="favored-remove"
             >
               <Icon>delete_forever_rounded</Icon>
             </Button>

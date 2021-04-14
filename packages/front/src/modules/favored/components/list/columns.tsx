@@ -1,6 +1,6 @@
 import { Avatar } from '@material-ui/core';
 import { GridColumns } from '@material-ui/data-grid';
-import { IBank } from '../../interfaces';
+import { IBank } from '../../../bank/interfaces';
 import { StatusChips } from '../status-chips.component';
 
 export const COLUMNS: GridColumns = [

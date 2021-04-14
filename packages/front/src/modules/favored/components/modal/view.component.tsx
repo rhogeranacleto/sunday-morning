@@ -39,7 +39,7 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
   const remove = useCallback(async () => {
     await favoredService.deleteMany([favored.id as string]);
     closeDialog();
-    closeModal({ text: 'Favorecido excluído', type: 'success' });
+    closeModal({ text: 'Favorecido excluído!', type: 'success' });
   }, []);
 
   const closeDialog = useCallback(() => setOpenDialog(false), []);
@@ -117,6 +117,7 @@ export const FavoredView = ({ favored, closeModal }: IFavoredViewProps) => {
             onClick={() => setOpenDialog(true)}
             variant="contained"
             color="secondary"
+            id="favored-remove"
           >
             <Icon>delete_forever_rounded</Icon>
           </Button>

@@ -39,7 +39,7 @@ export const RemoveDialog = ({
         Cancelar
       </Button>
       <Button onClick={remove} color="secondary" autoFocus>
-        Confimar exclusão
+        Confirmar exclusão
       </Button>
     </DialogActions>
   </Dialog>
