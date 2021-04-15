@@ -165,7 +165,7 @@ describe('FavoredController (e2e)', () => {
         expect(body.message).toHaveLength(2);
       });
 
-      it('should not save with wrong info', async () => {
+      it('should save with right info', async () => {
         const bank = await getRepository(Bank).findOneOrFail({ code: '001' });
 
         const payload = FavoredBuilder.build({
@@ -204,7 +204,7 @@ describe('FavoredController (e2e)', () => {
         expect(body.message).toHaveLength(3);
       });
 
-      it('should not save with wrong info', async () => {
+      it('should save with right info', async () => {
         const bank = await getRepository(Bank).findOneOrFail({
           code: Not('001'),
         });
